@@ -33,8 +33,8 @@ async function getWeatherData(cityValue) {
 
     const details = [
       `Feels like: ${Math.round(data.main.feels_like)}`,
-      `Humidity: ${data.main.humidity}`,
-      `Wind speed: ${data.wind.speed}`,
+      `Humidity: ${data.main.humidity}%`,
+      `Wind speed: ${data.wind.speed} m/s`,
     ];
 
     weatherDataEl.querySelector(
@@ -46,5 +46,18 @@ async function getWeatherData(cityValue) {
     ).textContent = `${temperature}°C`;
 
     weatherDataEl.querySelector(".description").textContent = description;
-  } catch (error) {}
+
+    weatherDataEl.querySelector(".details").innerHTML = details
+      .map((detail) => `<div>${detail}</div>`)
+      .join("");
+  } catch (error) {
+    weatherDataEl.querySelector(".icon").innerHTML = "";
+
+    weatherDataEl.querySelector(".temperature").textContent = "";
+
+    weatherDataEl.querySelector(".description").textContent =
+      "An error happened, please try again later";
+
+    weatherDataEl.querySelector(".details").innerHTML = "";
+  }
 }
